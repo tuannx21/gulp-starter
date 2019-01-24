@@ -19,3 +19,40 @@
   width: 70%;
   font-size: 30px;
 }
+
+.app {
+  width: 40%;
+  min-width: 500px;
+  background: slategray;
+  border-radius: 8px;
+  padding: 40px;
+  margin: 0 auto;
+  font-size: 20px;
+}
+
+.todo-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.todo {
+  border: 1px solid red;
+  position: relative;
+
+  .todo__input {
+    width: 100%;
+    font-size: 20px;
+  }
+
+  .todo__remove,
+  .todo__completed {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+
+  .todo__remove {
+    right: 0;
+  }
+}

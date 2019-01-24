@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Test page</title>
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
   
@@ -27,16 +27,40 @@
   <button id="show-uncomplete">Uncomplete</button>
   <button id="show-completed">Complete</button>
 </div>
+<br><br>
+
+<div class="app">
+  <div class="header"></div>
+  <div class="main">
+    <ul class="todo-list">
+      <li class="todo">
+        <input class="todo__input" value="" readonly>
+        <button class="todo__remove">remove</button>
+        <button class="todo__completed">complete</button>
+      </li>
+      <li class="todo">
+        <input class="todo__input" value="" readonly>
+        <button class="todo__remove">remove</button>
+        <button class="todo__completed">complete</button>
+      </li>
+      <li class="todo">
+        <input class="todo__input" value="" readonly>
+        <button class="todo__remove">remove</button>
+        <button class="todo__completed">complete</button>
+      </li>
+    </ul>
+  </div>
+  <div class="footer"></div>
+</div>
 
 <template id="todo-template">
   <li>
     <input id="input-todo" value="" readonly>
-    <button id="edit-todo">edit</button>
     <button id="remove-todo">remove</button>
     <button id="complete-todo">complete</button>
   </li>
 </template>
 
-  <script src="js/bundle.min.js"></script>
+  <script src="/js/bundle.min.js"></script>
 </body>
 </html>
