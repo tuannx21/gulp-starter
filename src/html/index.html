@@ -2,10 +2,9 @@
 
 {% block content %}
 <h1 class="app-title">Todo App</h1>
-<div class="todoapp">
+<!-- <div class="todoapp">
   <div class="header">
     <input id="input-new-todo">
-    <button id="new-todo">Ok</button>
     <button id="complete-all-todo">completed all</button>
   </div>
   <ul id="todo-list"></ul>
@@ -19,37 +18,31 @@
   <button id="show-uncomplete">Uncomplete</button>
   <button id="show-completed">Complete</button>
 </div>
-<br><br>
+<br><br> -->
 
-<div class="app">
-  <div class="header"></div>
+<div class="todoapp">
+  <div class="header">
+    <input class="input-new-todo" id="input-new-todo">
+    <button class="btn complete-all" id="complete-all-todo"></button>
+  </div>
   <div class="main">
-    <ul class="todo-list">
-      <li class="todo">
-        <input class="todo__input" value="" readonly>
-        <button class="todo__remove">remove</button>
-        <button class="todo__completed">complete</button>
-      </li>
-      <li class="todo">
-        <input class="todo__input" value="" readonly>
-        <button class="todo__remove">remove</button>
-        <button class="todo__completed">complete</button>
-      </li>
-      <li class="todo">
-        <input class="todo__input" value="" readonly>
-        <button class="todo__remove">remove</button>
-        <button class="todo__completed">complete</button>
-      </li>
+    <ul class="todo-list" id="todo-list">
     </ul>
   </div>
-  <div class="footer"></div>
+  <div class="footer">
+    <span>All: <span id="all">4</span></span>
+    <span>Remaining: <span id="remaining">4</span></span>
+    <button class="btn show-all" id="show-all">All</button>
+    <button class="btn show-uncomplete" id="show-uncomplete">Uncomplete</button>
+    <button class="btn show-complete" id="show-completed">Complete</button>
+  </div>
 </div>
 
 <template id="todo-template">
-  <li>
-    <input id="input-todo" value="" readonly>
-    <button id="remove-todo">remove</button>
-    <button id="complete-todo">complete</button>
+  <li class="todo">
+    <input class="todo__input" id="input-todo" value="">
+    <button class="btn todo__remove" id="remove-todo"></button>
+    <button class="btn todo__completed" id="complete-todo"></button>
   </li>
 </template>
 {% endblock %}
