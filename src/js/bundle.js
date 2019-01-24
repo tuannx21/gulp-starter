@@ -57,9 +57,13 @@ const showTodos = (mode) => {
     input.style.textDecoration = todo.completed === true ? 'line-through' : 'none'
 
     input.addEventListener('dblclick', function () { this.readOnly = false })
-    edit.addEventListener('click', function () {
+    input.addEventListener('blur', function () {
       input.readOnly = true
-      TodoList = updateTodo(TodoList, { id: todo.id, title: input.value })
+      if (input.value !== '') {
+        TodoList = updateTodo(TodoList, { id: todo.id, title: input.value })
+      } else {
+        TodoList = removeTodo(TodoList, todo)
+      }
       rerender(mode)
     })
     remove.addEventListener('click', function () {
@@ -92,10 +96,11 @@ const TodoApp = () => {
   let inputNewTodo = document.querySelector('#input-new-todo')
 
   inputNewTodo.addEventListener('keypress', function (event) {
-    (event.which === 13 || event.keyCode === 13) ?
-      TodoList = addTodo(TodoList, inputNewTodo.value) : ''
-    rerender()
-    inputNewTodo.value = ''
+    if (event.which === 13 || event.keyCode === 13) {
+      TodoList = addTodo(TodoList, inputNewTodo.value)
+      inputNewTodo.value = ''
+      rerender()
+    }
   })
 
   document.querySelector('#new-todo').addEventListener('click', function () {
