@@ -33,6 +33,10 @@ const completeAll = (todos) => {
   return todos.map((todo) => (todo.completed = true))
 }
 
+const uncompleteAll = (todos) => {
+  return todos.map((todo) => (todo.completed = false))
+}
+
 const remainingTodos = (todos) => {
   return todos.filter((todo) => (todo.completed === false))
 }
@@ -43,5 +47,6 @@ export {
   updateTodo,
   toggleTodo,
   completeAll,
+  uncompleteAll,
   remainingTodos
 }

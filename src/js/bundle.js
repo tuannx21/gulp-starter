@@ -4,6 +4,7 @@ import {
   updateTodo,
   toggleTodo,
   completeAll,
+  uncompleteAll,
   remainingTodos
 } from './todo-function'
 
@@ -54,13 +55,23 @@ const showTodos = (mode) => {
     let complete = todoItem.querySelector('#complete-todo')
 
     input.value = todo.title
-    input.style.textDecoration = todo.completed === true ? 'line-through' : 'none'
+    // input.style.textDecoration = todo.completed === true ? 'line-through' : 'none'
+    // input.style.opacity = todo.completed === true ? '.3' : '1'
+    if(todo.completed === true) {
+      input.style.textDecoration = 'line-through'
+      input.style.opacity = '.3'
+      complete.style.opacity = '1'
+    } else {
+      input.style.textDecoration = 'none'
+      input.style.opacity = '1'
+      complete.style.opacity = '.3'
+    }
 
-    todoItem.addEventListener('mouseover', function () { 
+    todoItem.addEventListener('mouseover', function () {
       remove.classList.add('active')
       complete.classList.add('active')
     })
-    todoItem.addEventListener('mouseout', function () { 
+    todoItem.addEventListener('mouseout', function () {
       remove.classList.remove('active')
       complete.classList.remove('active')
     })
@@ -103,12 +114,33 @@ const rerender = () => {
   clearTodos()
   showTodos(currentMode)
   showStatistical()
+  switch (currentMode) {
+    case 'completed':
+      document.querySelector('#show-completed').classList.add('active')
+      document.querySelector('#show-uncomplete').classList.remove('active')
+      document.querySelector('#show-all').classList.remove('active')
+      break
+    case 'uncomplete':
+      document.querySelector('#show-completed').classList.remove('active')
+      document.querySelector('#show-uncomplete').classList.add('active')
+      document.querySelector('#show-all').classList.remove('active')
+      break
+    default:
+      document.querySelector('#show-completed').classList.remove('active')
+      document.querySelector('#show-uncomplete').classList.remove('active')
+      document.querySelector('#show-all').classList.add('active')
+  }
 }
 
 const TodoApp = () => {
   initial()
   rerender();
   let inputNewTodo = document.querySelector('#input-new-todo')
+  let completeAllTodo = document.querySelector('#complete-all-todo')
+  let showAllTodo = document.querySelector('#show-all')
+  let showUncompleteTodo = document.querySelector('#show-uncomplete')
+  let showCompletedTodo = document.querySelector('#show-completed')
+  let uncompleteAllTodo = document.querySelector('#uncomplete-all-todo')
 
   inputNewTodo.addEventListener('keypress', function (event) {
     if (event.which === 13 || event.keyCode === 13) {
@@ -118,22 +150,27 @@ const TodoApp = () => {
     }
   })
 
-  document.querySelector('#complete-all-todo').addEventListener('click', function () {
+  completeAllTodo.addEventListener('click', function () {
     completeAll(TodoList)
     rerender()
   })
 
-  document.querySelector('#show-all').addEventListener('click', function () {
+  uncompleteAllTodo.addEventListener('click', function () {
+    uncompleteAll(TodoList)
+    rerender()
+  })
+
+  showAllTodo.addEventListener('click', function () {
     currentMode = 'all'
     rerender()
   })
 
-  document.querySelector('#show-uncomplete').addEventListener('click', function () {
+  showUncompleteTodo.addEventListener('click', function () {
     currentMode = 'uncomplete'
     rerender()
   })
 
-  document.querySelector('#show-completed').addEventListener('click', function () {
+  showCompletedTodo.addEventListener('click', function () {
     currentMode = 'completed'
     rerender()
   })
