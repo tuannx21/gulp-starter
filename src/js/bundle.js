@@ -8,6 +8,7 @@ import {
 } from './todo-function'
 
 let TodoList
+let currentMode = 'all'
 
 //App 
 const initial = () => {
@@ -49,13 +50,20 @@ const showTodos = (mode) => {
 
     todoItem.id = `todo${todo.id}`
     let input = todoItem.querySelector('#input-todo')
-    let edit = todoItem.querySelector('#edit-todo')
     let remove = todoItem.querySelector('#remove-todo')
     let complete = todoItem.querySelector('#complete-todo')
 
     input.value = todo.title
     input.style.textDecoration = todo.completed === true ? 'line-through' : 'none'
 
+    todoItem.addEventListener('mouseover', function () { 
+      remove.classList.add('active')
+      complete.classList.add('active')
+    })
+    todoItem.addEventListener('mouseout', function () { 
+      remove.classList.remove('active')
+      complete.classList.remove('active')
+    })
     input.addEventListener('dblclick', function () { this.readOnly = false })
     input.addEventListener('blur', function () {
       input.readOnly = true
@@ -65,6 +73,12 @@ const showTodos = (mode) => {
         TodoList = removeTodo(TodoList, todo)
       }
       rerender(mode)
+    })
+    input.addEventListener('keypress', function () {
+      if (event.which === 13 || event.keyCode === 13) {
+        TodoList = updateTodo(TodoList, { id: todo.id, title: input.value })
+        rerender()
+      }
     })
     remove.addEventListener('click', function () {
       TodoList = removeTodo(TodoList, todo)
@@ -85,14 +99,15 @@ const showStatistical = () => {
   document.querySelector('#remaining').innerHTML = remainingTodos(TodoList).length
 }
 
-const rerender = (mode) => {
+const rerender = () => {
   clearTodos()
-  showTodos(mode)
+  showTodos(currentMode)
   showStatistical()
 }
 
 const TodoApp = () => {
   initial()
+  rerender();
   let inputNewTodo = document.querySelector('#input-new-todo')
 
   inputNewTodo.addEventListener('keypress', function (event) {
@@ -103,26 +118,24 @@ const TodoApp = () => {
     }
   })
 
-  document.querySelector('#new-todo').addEventListener('click', function () {
-    TodoList = addTodo(TodoList, inputNewTodo.value)
-    rerender()
-  })
-
   document.querySelector('#complete-all-todo').addEventListener('click', function () {
     completeAll(TodoList)
     rerender()
   })
 
   document.querySelector('#show-all').addEventListener('click', function () {
+    currentMode = 'all'
     rerender()
   })
 
   document.querySelector('#show-uncomplete').addEventListener('click', function () {
-    rerender('uncomplete')
+    currentMode = 'uncomplete'
+    rerender()
   })
 
   document.querySelector('#show-completed').addEventListener('click', function () {
-    rerender('completed')
+    currentMode = 'completed'
+    rerender()
   })
 
   rerender()
