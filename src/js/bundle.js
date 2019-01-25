@@ -10,7 +10,7 @@ import {
 
 let TodoList
 let currentMode = 'all'
-let completeAllState = true;
+let completeAllState = true
 
 //App 
 const initial = () => {
@@ -148,19 +148,19 @@ const TodoApp = () => {
     if (event.which === 13 || event.keyCode === 13) {
       TodoList = addTodo(TodoList, inputNewTodo.value)
       inputNewTodo.value = ''
-      completeAllState = true;
+      completeAllState = true
       rerender()
     }
   })
 
   completeAllTodo.addEventListener('click', function () {
     if (completeAllState === true) {
-      completeAll(TodoList);
+      completeAll(TodoList)
     } else {
-      uncompleteAll(TodoList);
+      uncompleteAll(TodoList)
     }
-    completeAllState = !completeAllState;
-    rerender();
+    completeAllState = !completeAllState
+    rerender()
   })
 
   showAllTodo.addEventListener('click', function () {
