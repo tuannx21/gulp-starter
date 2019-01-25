@@ -10,6 +10,7 @@ import {
 
 let TodoList
 let currentMode = 'all'
+let completeAllState = true;
 
 //App 
 const initial = () => {
@@ -57,7 +58,7 @@ const showTodos = (mode) => {
     input.value = todo.title
     // input.style.textDecoration = todo.completed === true ? 'line-through' : 'none'
     // input.style.opacity = todo.completed === true ? '.3' : '1'
-    if(todo.completed === true) {
+    if (todo.completed === true) {
       input.style.textDecoration = 'line-through'
       input.style.opacity = '.3'
       complete.style.opacity = '1'
@@ -134,13 +135,12 @@ const rerender = () => {
 
 const TodoApp = () => {
   initial()
-  rerender();
+  rerender()
   let inputNewTodo = document.querySelector('#input-new-todo')
   let completeAllTodo = document.querySelector('#complete-all-todo')
   let showAllTodo = document.querySelector('#show-all')
   let showUncompleteTodo = document.querySelector('#show-uncomplete')
   let showCompletedTodo = document.querySelector('#show-completed')
-  let uncompleteAllTodo = document.querySelector('#uncomplete-all-todo')
 
   inputNewTodo.addEventListener('keypress', function (event) {
     if (event.which === 13 || event.keyCode === 13) {
@@ -151,13 +151,15 @@ const TodoApp = () => {
   })
 
   completeAllTodo.addEventListener('click', function () {
-    completeAll(TodoList)
-    rerender()
-  })
-
-  uncompleteAllTodo.addEventListener('click', function () {
-    uncompleteAll(TodoList)
-    rerender()
+    if (completeAllState === true) {
+      completeAll(TodoList);
+      this.style.opacity = '.3'
+    } else {
+      uncompleteAll(TodoList);
+      this.style.opacity = '1'
+    }
+    completeAllState = !completeAllState;
+    rerender();
   })
 
   showAllTodo.addEventListener('click', function () {

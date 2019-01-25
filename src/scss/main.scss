@@ -109,8 +109,7 @@
 
   .show-all,
   .show-uncomplete,
-  .show-complete,
-  .uncomlete-all {
+  .show-complete {
     margin-left: 2px;
     background: slategrey;
     border-radius: 4px;
@@ -127,9 +126,5 @@
 
   .show-all {
     margin-left: 20%;
-  }
-
-  .uncomlete-all {
-    float: right;
   }
 }
