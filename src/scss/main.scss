@@ -26,11 +26,12 @@
   margin-bottom: 5px;
 
   .input-new-todo {
-    font-size: 64px;
+    font-size: 36px;
     width: 90%;
     margin-left: 40px;
     outline: 0;
     border: 0;
+    padding: 20px 0;
   }
 
   .complete-all {
@@ -69,6 +70,11 @@
     font-size: 48px;
     margin-left: 40px;
     outline: 0;
+
+    &.has-completed {
+      text-decoration: line-through;
+      opacity: .3;
+    }
   }
 
   .todo__remove,
@@ -96,6 +102,10 @@
     &.active{
       z-index: 10;
       background: transparent url(/img/ico_check.png) no-repeat center;
+    }
+
+    &.has-completed {
+      opacity: 1;
     }
   }
 }

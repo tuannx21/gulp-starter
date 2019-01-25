@@ -11,15 +11,16 @@ import {
 let TodoList
 let currentMode = 'all'
 let completeAllState = true
+const inputNewTodo = document.querySelector('#input-new-todo')
+const completeAllTodo = document.querySelector('#complete-all-todo')
+const showAllTodo = document.querySelector('#show-all')
+const showUncompleteTodo = document.querySelector('#show-uncomplete')
+const showCompletedTodo = document.querySelector('#show-completed')
 
-//App 
+//App
 const initial = () => {
   const TodoListFromLocalStorage = JSON.parse(window.localStorage.getItem('todos'))
-  if (TodoListFromLocalStorage === null) {
-    TodoList = []
-  } else {
-    TodoList = TodoListFromLocalStorage
-  }
+  TodoList = TodoListFromLocalStorage === null ? [] : TodoListFromLocalStorage
 }
 
 const saveToLocalStorage = () => {
@@ -55,13 +56,8 @@ const showTodos = (mode) => {
     }
 
     if (todo.completed === true) {
-      input.style.textDecoration = 'line-through'
-      input.style.opacity = '.3'
-      complete.style.opacity = '1'
-    } else {
-      input.style.textDecoration = 'none'
-      input.style.opacity = '1'
-      complete.style.opacity = '.3'
+      input.classList.add('has-completed')
+      complete.classList.add('has-completed')
     }
 
     todoItem.addEventListener('mouseover', function () {
@@ -119,31 +115,23 @@ const rerender = () => {
   showStatistical()
   switch (currentMode) {
     case 'completed':
-      document.querySelector('#show-completed').classList.add('active')
-      document.querySelector('#show-uncomplete').classList.remove('active')
-      document.querySelector('#show-all').classList.remove('active')
+      showCompletedTodo.classList.add('active')
+      showUncompleteTodo.classList.remove('active')
+      showAllTodo.classList.remove('active')
       break
     case 'uncomplete':
-      document.querySelector('#show-completed').classList.remove('active')
-      document.querySelector('#show-uncomplete').classList.add('active')
-      document.querySelector('#show-all').classList.remove('active')
+      showCompletedTodo.classList.remove('active')
+      showUncompleteTodo.classList.add('active')
+      showAllTodo.classList.remove('active')
       break
     default:
-      document.querySelector('#show-completed').classList.remove('active')
-      document.querySelector('#show-uncomplete').classList.remove('active')
-      document.querySelector('#show-all').classList.add('active')
+      showCompletedTodo.classList.remove('active')
+      showUncompleteTodo.classList.remove('active')
+      showAllTodo.classList.add('active')
   }
 }
 
-const TodoApp = () => {
-  initial()
-  rerender()
-  let inputNewTodo = document.querySelector('#input-new-todo')
-  let completeAllTodo = document.querySelector('#complete-all-todo')
-  let showAllTodo = document.querySelector('#show-all')
-  let showUncompleteTodo = document.querySelector('#show-uncomplete')
-  let showCompletedTodo = document.querySelector('#show-completed')
-
+const createOnEnter = () => {
   inputNewTodo.addEventListener('keypress', function (event) {
     if (event.which === 13 || event.keyCode === 13) {
       TodoList = addTodo(TodoList, inputNewTodo.value)
@@ -152,7 +140,9 @@ const TodoApp = () => {
       rerender()
     }
   })
+}
 
+const clickCompleteAll = () => {
   completeAllTodo.addEventListener('click', function () {
     if (completeAllState === true) {
       completeAll(TodoList)
@@ -162,21 +152,37 @@ const TodoApp = () => {
     completeAllState = !completeAllState
     rerender()
   })
+}
 
+const clickShowAllTodo = () => {
   showAllTodo.addEventListener('click', function () {
     currentMode = 'all'
     rerender()
   })
+}
 
+const clickShowUncompleteTodo = () => {
   showUncompleteTodo.addEventListener('click', function () {
     currentMode = 'uncomplete'
     rerender()
   })
+}
 
+const clickShowCompleteTodo = () => {
   showCompletedTodo.addEventListener('click', function () {
     currentMode = 'completed'
     rerender()
   })
+}
+
+const TodoApp = () => {
+  initial()
+
+  createOnEnter();
+  clickCompleteAll();
+  clickShowAllTodo();
+  clickShowUncompleteTodo();
+  clickShowCompleteTodo();
 
   rerender()
 }
