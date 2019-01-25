@@ -38,6 +38,10 @@ const showTodos = (mode) => {
     let template = document.querySelector('#todo-template')
     let clone = template.content.cloneNode(true)
     let todoItem = clone.querySelector('li')
+    let input = todoItem.querySelector('#input-todo')
+    let remove = todoItem.querySelector('#remove-todo')
+    let complete = todoItem.querySelector('#complete-todo')
+    input.value = todo.title
 
     switch (mode) {
       case 'uncomplete':
@@ -50,14 +54,6 @@ const showTodos = (mode) => {
         todoItem.style.display = 'block'
     }
 
-    todoItem.id = `todo${todo.id}`
-    let input = todoItem.querySelector('#input-todo')
-    let remove = todoItem.querySelector('#remove-todo')
-    let complete = todoItem.querySelector('#complete-todo')
-
-    input.value = todo.title
-    // input.style.textDecoration = todo.completed === true ? 'line-through' : 'none'
-    // input.style.opacity = todo.completed === true ? '.3' : '1'
     if (todo.completed === true) {
       input.style.textDecoration = 'line-through'
       input.style.opacity = '.3'
@@ -72,11 +68,14 @@ const showTodos = (mode) => {
       remove.classList.add('active')
       complete.classList.add('active')
     })
+
     todoItem.addEventListener('mouseout', function () {
       remove.classList.remove('active')
       complete.classList.remove('active')
     })
+
     input.addEventListener('dblclick', function () { this.readOnly = false })
+
     input.addEventListener('blur', function () {
       input.readOnly = true
       if (input.value !== '') {
@@ -86,16 +85,19 @@ const showTodos = (mode) => {
       }
       rerender(mode)
     })
+
     input.addEventListener('keypress', function () {
       if (event.which === 13 || event.keyCode === 13) {
         TodoList = updateTodo(TodoList, { id: todo.id, title: input.value })
         rerender()
       }
     })
+
     remove.addEventListener('click', function () {
       TodoList = removeTodo(TodoList, todo)
       rerender(mode)
     })
+
     complete.addEventListener('click', function () {
       TodoList = toggleTodo(TodoList, todo)
       rerender(mode)
@@ -146,6 +148,7 @@ const TodoApp = () => {
     if (event.which === 13 || event.keyCode === 13) {
       TodoList = addTodo(TodoList, inputNewTodo.value)
       inputNewTodo.value = ''
+      completeAllState = true;
       rerender()
     }
   })
@@ -153,10 +156,8 @@ const TodoApp = () => {
   completeAllTodo.addEventListener('click', function () {
     if (completeAllState === true) {
       completeAll(TodoList);
-      this.style.opacity = '.3'
     } else {
       uncompleteAll(TodoList);
-      this.style.opacity = '1'
     }
     completeAllState = !completeAllState;
     rerender();
