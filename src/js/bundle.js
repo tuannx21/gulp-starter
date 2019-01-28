@@ -13,10 +13,10 @@ let currentMode = 'all'
 let completeAllState = true
 
 const inputNewTodo = document.querySelector('#input-new-todo')
-const completeAllTodo = document.querySelector('#complete-all-todo')
-const showAllTodo = document.querySelector('#show-all')
-const showUncompleteTodo = document.querySelector('#show-uncomplete')
-const showCompletedTodo = document.querySelector('#show-completed')
+const completeAllTodo = document.querySelector('#complete-all-btn')
+const showAllTodo = document.querySelector('#show-all-btn')
+const showUncompleteTodo = document.querySelector('#show-uncomplete-btn')
+const showCompletedTodo = document.querySelector('#show-completed-btn')
 const todoList = document.querySelector('#todo-list')
 
 //App
@@ -41,8 +41,8 @@ const showTodos = (mode) => {
     let clone = template.content.cloneNode(true)
     let todoItem = clone.querySelector('li')
     let input = todoItem.querySelector('#input-todo')
-    let remove = todoItem.querySelector('#remove-todo')
-    let complete = todoItem.querySelector('#complete-todo')
+    let remove = todoItem.querySelector('#remove-todo-btn')
+    let complete = todoItem.querySelector('#complete-todo-btn')
     input.value = todo.title
 
     switch (mode) {
@@ -122,7 +122,7 @@ const rerender = () => {
   }
 }
 
-const createOnEnter = () => {
+const onKeyPressCreateNew = () => {
   inputNewTodo.addEventListener('keypress', function (event) {
     if (event.which === 13 || event.keyCode === 13) {
       TodoList = addTodo(TodoList, inputNewTodo.value)
@@ -133,7 +133,7 @@ const createOnEnter = () => {
   })
 }
 
-const clickCompleteAll = () => {
+const onClickCompleteAll = () => {
   completeAllTodo.addEventListener('click', function () {
     if (completeAllState === true) {
       completeAll(TodoList)
@@ -145,21 +145,21 @@ const clickCompleteAll = () => {
   })
 }
 
-const clickShowAllTodo = () => {
+const onClickShowAllTodo = () => {
   showAllTodo.addEventListener('click', function () {
     currentMode = 'all'
     rerender()
   })
 }
 
-const clickShowUncompleteTodo = () => {
+const onClickShowUncompleteTodo = () => {
   showUncompleteTodo.addEventListener('click', function () {
     currentMode = 'uncomplete'
     rerender()
   })
 }
 
-const clickShowCompleteTodo = () => {
+const onClickShowCompleteTodo = () => {
   showCompletedTodo.addEventListener('click', function () {
     currentMode = 'completed'
     rerender()
@@ -169,11 +169,11 @@ const clickShowCompleteTodo = () => {
 const TodoApp = () => {
   initial()
 
-  createOnEnter();
-  clickCompleteAll();
-  clickShowAllTodo();
-  clickShowUncompleteTodo();
-  clickShowCompleteTodo();
+  onKeyPressCreateNew();
+  onClickCompleteAll();
+  onClickShowAllTodo();
+  onClickShowUncompleteTodo();
+  onClickShowCompleteTodo();
 
   rerender()
 }
