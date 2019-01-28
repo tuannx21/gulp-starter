@@ -18,7 +18,8 @@ const showAllTodo = document.querySelector('#show-all-btn')
 const showUncompleteTodo = document.querySelector('#show-uncomplete-btn')
 const showCompletedTodo = document.querySelector('#show-completed-btn')
 const todoList = document.querySelector('#todo-list')
-
+const allTodo = document.querySelector('#all')
+const remainTodo = document.querySelector('#remaining')
 //App
 const initial = () => {
   let TodoListFromLocalStorage = JSON.parse(window.localStorage.getItem('todos'))
@@ -96,8 +97,8 @@ const showTodos = (mode) => {
 }
 
 const showStatistical = () => {
-  document.querySelector('#all').innerHTML = TodoList.length
-  document.querySelector('#remaining').innerHTML = remainingTodos(TodoList).length
+  allTodo.innerHTML = TodoList.length
+  remainTodo.innerHTML = remainingTodos(TodoList).length
 }
 
 const rerender = () => {
