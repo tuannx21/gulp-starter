@@ -11,15 +11,17 @@ import {
 let TodoList
 let currentMode = 'all'
 let completeAllState = true
+
 const inputNewTodo = document.querySelector('#input-new-todo')
 const completeAllTodo = document.querySelector('#complete-all-todo')
 const showAllTodo = document.querySelector('#show-all')
 const showUncompleteTodo = document.querySelector('#show-uncomplete')
 const showCompletedTodo = document.querySelector('#show-completed')
+const todoList = document.querySelector('#todo-list')
 
 //App
 const initial = () => {
-  const TodoListFromLocalStorage = JSON.parse(window.localStorage.getItem('todos'))
+  let TodoListFromLocalStorage = JSON.parse(window.localStorage.getItem('todos'))
   TodoList = TodoListFromLocalStorage === null ? [] : TodoListFromLocalStorage
 }
 
@@ -28,7 +30,6 @@ const saveToLocalStorage = () => {
 }
 
 const clearTodos = () => {
-  let todoList = document.querySelector('#todo-list')
   while (todoList.firstChild) {
     todoList.removeChild(todoList.firstChild)
   }
@@ -60,16 +61,6 @@ const showTodos = (mode) => {
       complete.classList.add('has-completed')
     }
 
-    todoItem.addEventListener('mouseover', function () {
-      remove.classList.add('active')
-      complete.classList.add('active')
-    })
-
-    todoItem.addEventListener('mouseout', function () {
-      remove.classList.remove('active')
-      complete.classList.remove('active')
-    })
-
     input.addEventListener('dblclick', function () { this.readOnly = false })
 
     input.addEventListener('blur', function () {
@@ -99,7 +90,7 @@ const showTodos = (mode) => {
       rerender(mode)
     })
 
-    document.querySelector('#todo-list').appendChild(clone)
+    todoList.appendChild(clone)
   })
   saveToLocalStorage()
 }
